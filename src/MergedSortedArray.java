@@ -1,35 +1,22 @@
 public class MergedSortedArray {
-    public void shift(int i, int[] nums, int m){
-        for(int j = m; j > i; j--){
-            nums[j] = nums[j - 1];
-        }
-    }
     public void merge(int[] nums1, int m, int[] nums2, int n) {
-        int i = 0;
-        int j = 0;
-        while (i < m && j < n) {
-            if (nums1[i] < nums2[j]) {
-                i++;
-            } else if (nums1[i] > nums2[j]) {
-                shift(i, nums1, m);
-                nums1[i] = nums2[j];
-                i++;
-                j++;
-                m++;
-            } else if (nums1[i] == nums2[j]) {
-                i++;
-                shift(i, nums1, m);
-                nums1[i] = nums2[j];
-                i++;
-                j++;
-                m++;
+        int last1 = m - 1;
+        int last2 = n - 1;
+        int last = m + n - 1;
+        while (last1 >= 0 && last2 >= 0) {
+            if (nums1[last1] > nums2[last2]) {
+                nums1[last] = nums1[last1];
+                last1--;
+            } else {
+                nums1[last] = nums2[last2];
+                last2--;
             }
+            last--;
         }
-        if (j < n) {
-            for (int k = m; k < nums1.length; k++) {
-                nums1[k] = nums2[j];
-                j++;
-            }
+        while (last2 >= 0) {
+            nums1[last] = nums2[last2];
+            last2--;
+            last--;
         }
     }
 }
